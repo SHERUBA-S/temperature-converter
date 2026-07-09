@@ -1,247 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🌡 Temperature Converter</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #e3f2fd, #90caf9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .converter {
-      background: white;
-      width: 350px;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      text-align: center;
-    }
-
-    h2 {
-      color: #1976d2;
-      margin-bottom: 20px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #90caf9;
-      border-radius: 8px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    .units {
-      display: flex;
-      justify-content: space-between;
-      margin: 20px 0;
-      font-size: 14px;
-    }
-
-    .units label {
-      cursor: pointer;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      background-color: #2196f3;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #1976d2;
-      transform: scale(1.05);
-    }
-
-    .reset {
-      background-color: #f44336;
-    }
-
-    .reset:hover {
-      background-color: #d32f2f;
-    }
-
-    .result {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
-      min-height: 50px;
-    }
-
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="converter">
+  <div class="converter">
 
-  <h2>🌡 Temperature Converter</h2>
+    <h2>🌡 Temperature Converter</h2>
 
-  <input 
-    type="text" 
-    id="temperature" 
-    placeholder="Enter temperature"
-  >
+    <input 
+      type="text" 
+      id="temperature" 
+      placeholder="Enter temperature"
+    >
 
-  <div class="units">
 
-    <label>
-      <input type="radio" name="unit" value="C" checked>
-      Celsius
-    </label>
+    <div class="units">
 
-    <label>
-      <input type="radio" name="unit" value="F">
-      Fahrenheit
-    </label>
+      <label>
+        <input type="radio" name="unit" value="C" checked>
+        Celsius
+      </label>
 
-    <label>
-      <input type="radio" name="unit" value="K">
-      Kelvin
-    </label>
+      <label>
+        <input type="radio" name="unit" value="F">
+        Fahrenheit
+      </label>
+
+      <label>
+        <input type="radio" name="unit" value="K">
+        Kelvin
+      </label>
+
+    </div>
+
+
+    <button onclick="convertTemperature()">
+      Convert
+    </button>
+
+
+    <button class="reset" onclick="resetConverter()">
+      Reset
+    </button>
+
+
+    <div class="result" id="result"></div>
 
   </div>
 
 
-  <button onclick="convertTemperature()">
-    Convert
-  </button>
-
-  <button class="reset" onclick="resetConverter()">
-    Reset
-  </button>
-
-
-  <div class="result" id="result"></div>
-
-</div>
-
-
-<script>
-
-function convertTemperature() {
-
-  const tempInput = document.getElementById("temperature").value;
-  const unit = document.querySelector(
-    'input[name="unit"]:checked'
-  ).value;
-
-  const resultDiv = document.getElementById("result");
-
-  const temp = parseFloat(tempInput);
-
-
-  if (isNaN(temp)) {
-
-    resultDiv.textContent = 
-      "Please enter a valid number!";
-
-    resultDiv.style.color = "red";
-    return;
-
-  }
-
-
-  if (unit === "K" && temp < 0) {
-
-    resultDiv.textContent =
-      "Kelvin cannot be negative!";
-
-    resultDiv.style.color = "red";
-    return;
-
-  }
-
-
-  let result = "";
-
-
-  switch(unit) {
-
-    case "C":
-
-      result =
-      `${temp}°C = ${(temp * 9/5 + 32).toFixed(2)}°F 
-      | ${(temp + 273.15).toFixed(2)}K`;
-
-      break;
-
-
-    case "F":
-
-      let celsius = (temp - 32) * 5/9;
-
-      result =
-      `${temp}°F = ${celsius.toFixed(2)}°C 
-      | ${(celsius + 273.15).toFixed(2)}K`;
-
-      break;
-
-
-    case "K":
-
-      let c = temp - 273.15;
-
-      result =
-      `${temp}K = ${c.toFixed(2)}°C 
-      | ${(c * 9/5 + 32).toFixed(2)}°F`;
-
-      break;
-
-  }
-
-
-  resultDiv.textContent = result;
-
-
-  // Temperature color indicator
-  if (temp < 10) {
-
-    resultDiv.style.color = "blue";
-
-  } else if (temp < 30) {
-
-    resultDiv.style.color = "green";
-
-  } else {
-
-    resultDiv.style.color = "red";
-
-  }
-
-}
-
-
-
-function resetConverter() {
-
-  document.getElementById("temperature").value = "";
-
-  document.getElementById("result").textContent = "";
-
-}
-
-</script>
-
+  <script src="script.js"></script>
 
 </body>
+
 </html>
